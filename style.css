@@ -16,8 +16,8 @@
 body {
     margin: 0;
     font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
-    background: radial-gradient(circle at 20% 20%, rgba(15, 155, 142, 0.7), transparent 35%),
-        radial-gradient(circle at 80% 0%, rgba(244, 162, 97, 0.8), transparent 30%),
+    background: radial-gradient(circle at 20% 20%, rgba(15, 155, 142, 0.07), transparent 35%),
+        radial-gradient(circle at 80% 0%, rgba(244, 162, 97, 0.08), transparent 30%),
         var(--bg);
     color: var(--text);
     line-height: 1.7;
@@ -34,7 +34,7 @@ a:hover {
 }
 
 header {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 48px 24px 24px;
     display: flex;
@@ -60,7 +60,7 @@ header {
 }
 
 main {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px 80px;
 }
@@ -115,7 +115,8 @@ section h2 {
 
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    /* 使用 12 栅格系统更灵活 */
+    grid-template-columns: repeat(40, 1fr);
     gap: 18px;
 }
 
@@ -125,12 +126,35 @@ section h2 {
     border-radius: 16px;
     padding: 20px;
     box-shadow: var(--shadow);
+    /* 默认手机端占满 12 列 */
+    grid-column: span 12;
+}
+
+/* 电脑端大于 768px 时精细控制宽度 */
+@media (min-width: 768px) {
+    /* 教育经历占比：例如占 5 份 (约41.6%) */
+    .card-edu {
+        grid-column: span 14;
+    }
+    
+    /* 荣誉奖项占比：例如占 7 份 (约58.3%) */
+    .card-honor {
+        grid-column: span 19;
+    }
+    
+    /* 能力证书占比：例如单独占 4 份 (约33.3%) */
+    .card-cert {
+        grid-column: span 7;
+    }
 }
 
 .card h3 {
     margin: 0 0 10px;
     font-size: 18px;
 }
+
+/* 删除旧的 card-half */
+/* @media (min-width: 768px) { ... } */
 
 .card p {
     margin: 0;
@@ -188,21 +212,72 @@ section h2 {
 .contact {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
+    gap: 16px;
+    align-items: stretch;
 }
 
-.contact a {
-    padding: 12px 16px;
-    border-radius: 12px;
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-radius: 14px;
     border: 1px solid var(--border);
     background: var(--card);
-    font-weight: 600;
     box-shadow: var(--shadow);
+    transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+    text-decoration: none;
+    color: var(--text);
+    min-width: 200px;
+}
+
+.contact-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 45px rgba(15, 155, 142, 0.12);
+    border-color: rgba(15, 155, 142, 0.3);
+    color: var(--text); /* 覆盖 a:hover 的颜色 */
+}
+
+/* 禁止整个卡片被选择，避免点击拖拽冲突 */
+.contact-item {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.contact-icon {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #f0f4f8;
+    border-radius: 10px;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-label {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.contact-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    /* 允许文本被选择和复制 */
+    user-select: text;
+    -webkit-user-select: text;
+    cursor: text;
 }
 
 footer {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 24px auto 40px;
     padding: 0 24px;
     color: var(--muted);
