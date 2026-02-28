@@ -115,8 +115,8 @@ section h2 {
 
 .card-grid {
     display: grid;
-    /* 使用 12 栅格系统更灵活 */
-    grid-template-columns: repeat(40, 1fr);
+    /* 手机端默认单列布局 */
+    grid-template-columns: 1fr;
     gap: 18px;
 }
 
@@ -126,12 +126,15 @@ section h2 {
     border-radius: 16px;
     padding: 20px;
     box-shadow: var(--shadow);
-    /* 默认手机端占满 12 列 */
-    grid-column: span 12;
 }
 
 /* 电脑端大于 768px 时精细控制宽度 */
 @media (min-width: 768px) {
+    .card-grid {
+        /* 电脑端使用更细致的栅格 */
+        grid-template-columns: repeat(40, 1fr);
+    }
+    
     /* 教育经历占比：例如占 5 份 (约41.6%) */
     .card-edu {
         grid-column: span 14;
@@ -297,4 +300,10 @@ footer {
     .hero h1 {
         font-size: 30px;
     }
+}
+
+.date {
+    display: inline-block;
+    min-width: 68px;
+    font-variant-numeric: tabular-nums;
 }
